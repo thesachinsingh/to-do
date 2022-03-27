@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block navbar %}
+<ul class="nav nav-pills">
+    <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
+    <!-- <li class="nav-item"><a href="{{ url_for('login') }}" class="nav-link active" aria-current="page">Login</a></li> -->
+    
+    {% if logged_in %}
+    <li class="nav-item"><a href="{{ url_for('logout') }}" class="nav-link">Log Out</a></li>
+    {% else %}
+    <li class="nav-item"><a href="{{ url_for('sign_up') }}" class="nav-link">Sign Up</a></li>
+    {% endif %}
+    <!-- <li class="nav-item"><a href="#" class="nav-link">About</a></li> -->
+  </ul>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-md-4 col-md-4 mx-auto">
+        <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+      
+          <div class="card-body p-4 p-sm-5">
+            <h5 class="card-title text-center mb-5 fw-light fs-5">Log In</h5>
+            <form action="{{ url_for('login') }}" method="post">
+
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInputUsername" placeholder="myusername" name="username" required autofocus>
+                <label for="floatingInputUsername">Username</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="passwd">
+                <label for="floatingPassword">Password</label>
+              </div>
+
+              <div class="d-grid mb-2">
+                <button class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" type="submit">Login</button>
+              </div>
+
+              <a class="d-block text-center mt-2" href="{{ url_for('sign_up') }}">Don't have an account? Create an account</a>
+
+              <!-- <hr class="my-4"> -->
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- <div class="container">
+    <form class="form-signin" style="display: inline; text-align: center;">
+        <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <div>
+            <label for="inputEmail">Email address</label>
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus="">
+            <br>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        </div>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
+    </form>
+</div> -->
+{% endblock %}
