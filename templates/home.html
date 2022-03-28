@@ -2,16 +2,55 @@
 {% block navbar %}
 <ul class="nav nav-pills">
     <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
+    {% if logged_in %}
+    <li class="nav-item"><a href="{{ url_for('logout') }}" class="nav-link">Log Out</a></li>
+    {% else %}
     <li class="nav-item"><a href="{{ url_for('login') }}" class="nav-link">Log In</a></li>
     <li class="nav-item"><a href="{{ url_for('sign_up') }}" class="nav-link">Sign Up</a></li>
-    {% if logged_in %}
-    <li class="nav-item"><a href="#" class="nav-link">Log Out</a></li>
     {% endif %}
     <!-- <li class="nav-item"><a href="#" class="nav-link">About</a></li> -->
 </ul>
-<br>
+<!-- <br> -->
+{% endblock %}
+
+{% block message %}
 {% if message %}
     <br>
     <div class="container" style="text-align: center; padding-top: 10%;"><h2>{{ message }}</h2></div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if user_todo %}
+
+<!-- <div class="album py-5 bg-light"> -->
+    
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+          <div class="row">
+            {% for todo in user_todo %}
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" src="https://images.unsplash.com/photo-1523878288860-7ad281611901" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">{{ todo.description }}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+    
+          </div>
+        </div>
+      </div>
+
+  <!-- </div> -->
 {% endif %}
 {% endblock %}
