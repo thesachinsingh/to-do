@@ -14,8 +14,20 @@
     letter-spacing: 0.05rem;
     padding: 0.75rem 1rem;
   }
-  
-
+<script>
+    function matchPassword() {  
+        var pw1 = document.getElementById("floatingPassword");  
+        var pw2 = document.getElementById("floatingPasswordConfirm");  
+        if(pw1 != pw2){   
+            // alert("Passwords did not match");
+            return false;  
+        } else {  
+            // alert("Password created successfully");
+            return true;
+              
+        }  
+    }  
+</script> 
 {% block content %}
 <!-- This snippet uses Font Awesome 5 Free as a dependency. You can download it at fontawesome.io! -->
 
@@ -25,11 +37,14 @@
           <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
         
             <div class="card-body p-4 p-sm-5">
-              <h5 class="card-title text-center mb-5 fw-light fs-5">Sign Up / Register</h5>
+              <h5 class="card-title text-center mb-3 fw-light fs-5">Sign Up / Register</h5>
               <form action="{{ url_for('sign_up') }}" method="post">
+                {% if message %}
+                <h2 style="color: red;">*{{ message }}</h2><br>
+                {% endif %}  
   
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="floatingInputUsername" placeholder="myusername" required autofocus>
+                  <input type="text" class="form-control" id="floatingInputUsername" name="username" placeholder="myusername" required autofocus>
                   <label for="floatingInputUsername">Username</label>
                 </div>
   
@@ -40,12 +55,12 @@
   
   
                 <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                  <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password" required>
                   <label for="floatingPassword">Password</label>
                 </div>
   
                 <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="floatingPasswordConfirm" placeholder="Confirm Password">
+                  <input type="password" class="form-control" id="floatingPasswordConfirm" placeholder="Confirm Password" confirm>
                   <label for="floatingPasswordConfirm">Confirm Password</label>
                 </div>
   
