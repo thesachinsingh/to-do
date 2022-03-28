@@ -91,8 +91,47 @@ def create_todo():
         db.session.add(todo)
         db.session.commit()
         return redirect('/')
+    elif "username" in session:
+        return render_template('/create_todo.html', username = session['username'], logged_in = True)
+    else:
+        return redirect('/')
+    
+@app.route('/todo/<int:todo_id>/edit')
+def edit_todo(todo_id):
+    if "username" in session:
+        user = users.query.filter_by(username = session["username"]).first()
+        if user:
+            todos = notes.query.filter_by(notes_id = todo_id, user_id = user.user_id).first()
+            if todos:
+                #Just give a nice alert for deletion and then redirect
+                return render_template('edit_todo.html', todo = todos)
+                
+            else:
+                return redirect('/')
+
+        else:
+            return redirect('/logout')
+    else:
+        return redirect('/')
+    
 
 
+@app.route('/delete/<int:todo_id>')
+def delete_todo(todo_id):
+    if "username" in session:
+        user = users.query.filter_by(username = session["username"]).first()
+        if user:
+            todos = notes.query.filter_by(notes_id = todo_id, user_id = user.user_id).first()
+            if todos:
+                notes.query.filter_by(notes_id = todo_id, user_id = user.user_id).delete()
+                db.session.commit()
+                #Just give a nice alert for deletion and then redirect
+                return redirect('/')
+                
+            else:
+                return redirect('/')
 
-
-    return render_template('/create_todo.html')
+        else:
+            return redirect('/logout')
+    else:
+        return redirect('/')

@@ -1,12 +1,26 @@
 {% extends 'base.html' %}
+{% block navbar %}
+<ul class="nav nav-pills">
+    <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
+    <!-- <li class="nav-item"><a href="{{ url_for('login') }}" class="nav-link active" aria-current="page">Login</a></li> -->
+    
+    {% if logged_in %}
+    <li class="nav-item"><a href="{{ url_for('logout') }}" class="nav-link">Log Out</a></li>
+    {% else %}
+    <li class="nav-item"><a href="{{ url_for('sign_up') }}" class="nav-link">Sign Up</a></li>
+    {% endif %}
+    <!-- <li class="nav-item"><a href="#" class="nav-link">About</a></li> -->
+  </ul>
+{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row">
+        <div><h2 style="text-align: center;"> Hey {{ username }}</h2></div>  
       <div class="col-lg-10 col-xl-9 mx-auto">
         <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
       
           <div class="card-body p-4 p-sm-5">
-            <h5 class="card-title text-center mb-5 fw-light fs-5">Add Todo</h5>
+            <h5 class="card-title text-center mb-3 fw-light fs-5">Add Todo</h5>
             <form action="{{ url_for('create_todo') }}" method="post">
 
               <div class="form-floating mb-3">
