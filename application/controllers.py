@@ -2,7 +2,7 @@
 # from flask import redirect, render_template, session
 # from application.models import db, users, notes
 from datetime import datetime
-from email import message
+from pytz import timezone
 from flask import current_app as app, redirect
 from flask import request, session, render_template, flash
 from application.models import db, users, notes
@@ -96,23 +96,35 @@ def create_todo():
     else:
         return redirect('/')
     
-@app.route('/todo/<int:todo_id>/edit')
+@app.route('/todo/<int:todo_id>/edit', methods = ['GET', 'POST'])
 def edit_todo(todo_id):
-    if "username" in session:
+    if request.method == 'POST':
+        new_heading = request.form['heading']
+        new_desc = request.form['description']
         user = users.query.filter_by(username = session["username"]).first()
-        if user:
-            todos = notes.query.filter_by(notes_id = todo_id, user_id = user.user_id).first()
-            if todos:
-                #Just give a nice alert for deletion and then redirect
-                return render_template('edit_todo.html', todo = todos)
-                
-            else:
-                return redirect('/')
+        entry = notes.query.filter_by(user_id = user.user_id, notes_id = todo_id).first()
+        entry.heading = new_heading
+        entry.description = new_desc
+        db.session.commit()
 
-        else:
-            return redirect('/logout')
-    else:
         return redirect('/')
+    elif request.method == 'GET':
+        if "username" in session:
+            user = users.query.filter_by(username = session["username"]).first()
+            if user:
+                todos = notes.query.filter_by(notes_id = todo_id, user_id = user.user_id).first()
+                if todos:
+                    todos.last_updated = todos.last_updated.strftime('%d-%m-%Y %H:%M')
+                    #Just give a nice alert for deletion and then redirect
+                    return render_template('edit_todo.html', todo = todos, logged_in = True)
+                    
+                else:
+                    return redirect('/')
+
+            else:
+                return redirect('/logout')
+        else:
+            return redirect('/')
     
 
 
