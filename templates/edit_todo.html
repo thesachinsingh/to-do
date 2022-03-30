@@ -19,16 +19,17 @@
         <div class="row">
             <div class="card border-success mb-3" style="max-width: 18rem;">
                 <div class="card-header text-success bg-transparent border-success">
-                    
-                    <textarea style="font-weight: bold; font-size: large;" class="form-control text-success" id="exampleFormControlTextarea1" rows="1">{{ todo.heading }}</textarea></div>
+                    <form action="/todo/{{ todo.notes_id }}/edit" method="post">
+                    <textarea style="font-weight: bold; font-size: large;" class="form-control text-success" id="exampleFormControlTextarea1" rows="1" name="heading">{{ todo.heading }}</textarea></div>
                     <div class="card-body text-success">
                         <!-- <h5 class="card-title">Success card title</h5> -->
                         <div class="form-group">
                             <!-- <label for="exampleFormControlTextarea1">Example textarea</label> -->
-                            <textarea class="form-control text-success" id="exampleFormControlTextarea1" rows="5">{{ todo.description }}</textarea>
+                            <textarea class="form-control text-success" id="exampleFormControlTextarea1" rows="5" name="description">{{ todo.description }}</textarea>
                           </div>
                         
                     </div>
+                    
                     <div class="card-footer bg-transparent border-success">
                         <small class="text-muted">Last updated {{ todo.last_updated }}</small>
                         <br>
@@ -36,13 +37,14 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                               <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='/'">Go Back</button>
-                              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='/todo/{{ todo.notes_id }}/edit'">Save</button>
+                              <button type="submit" class="btn btn-sm btn-outline-secondary">Save</button>
                             </div>
                             
                             <!-- <small class="text-muted">Last updated {{ todo.last_updated }}</small> -->
                         </div>
                         
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
