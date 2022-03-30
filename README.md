@@ -1,5 +1,5 @@
 # To-do-App
-Simple to do list page  
+Simple to do list app  
 ## Step 1 : clone the repo using ```git clone https://github.com/thesachinsingh/to-do.git``` in your terminal.  
 
 ## Step 2 : write ```python app.py``` in your terminal to run it on localhost  
