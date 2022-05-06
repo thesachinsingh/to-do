@@ -18,3 +18,4 @@ class notes(db.Model):
     last_updated = db.Column(db.DateTime, nullable = False)
     created_on = db.Column(db.DateTime, nullable = False)
     user = db.relationship(users, backref=backref("notes", cascade="all, delete, delete-orphan"))
+    #master_password for something
